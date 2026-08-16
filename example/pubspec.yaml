@@ -1,0 +1,26 @@
+name: example
+description: "A new Flutter project."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.11.0
+  flutter: ^3.41.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl:
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_a11y_widget_testing_helpers:
+    path: ../
+  flutter_lints:
+
+flutter:
+  generate: true
+  uses-material-design: true

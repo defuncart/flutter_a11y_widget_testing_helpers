@@ -1,0 +1,9 @@
+{
+  "@@locale": "en",
+  "appTitle": "A11y Example",
+  "welcomeTitle": "Welcome",
+  "emailLabel": "Email",
+  "passwordLabel": "Password",
+  "signIn": "Sign in",
+  "signedIn": "Signed in"
+}
