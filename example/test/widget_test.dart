@@ -1,6 +1,6 @@
 import 'package:example/l10n/generated/app_localizations.dart';
 import 'package:example/main.dart';
-import 'package:flutter_a11y_widget_testing_helpers/flutter_a11y_widget_testing_helpers.dart';
+import 'package:a11y_test/a11y_test.dart';
 
 void main() {
   testAccessibility(

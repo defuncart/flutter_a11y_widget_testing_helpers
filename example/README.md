@@ -1,3 +1,3 @@
 # example
 
-An example for flutter_a11y_widget_testing_helpers.
+An example for a11y_test.

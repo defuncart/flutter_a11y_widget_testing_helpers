@@ -1,5 +1,5 @@
+import 'package:a11y_test/a11y_test.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_a11y_widget_testing_helpers/flutter_a11y_widget_testing_helpers.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -65,14 +65,14 @@ void main() {
     expect(ScreenSize.mobile.size, defaultMobile);
   });
 
-  test('screens defaults to all screen sizes and reset restores them', () {
-    expect(A11yTestConfig.screens, ScreenSize.values);
+  test('screens defaults to mobile and tablet and reset restores them', () {
+    expect(A11yTestConfig.screens, [ScreenSize.mobile, ScreenSize.tablet]);
 
     A11yTestConfig.screens = [ScreenSize.mobile];
     expect(A11yTestConfig.screens, [ScreenSize.mobile]);
 
     A11yTestConfig.reset();
 
-    expect(A11yTestConfig.screens, ScreenSize.values);
+    expect(A11yTestConfig.screens, [ScreenSize.mobile, ScreenSize.tablet]);
   });
 }

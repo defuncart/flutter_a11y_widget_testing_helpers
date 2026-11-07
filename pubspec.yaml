@@ -1,7 +1,14 @@
-name: flutter_a11y_widget_testing_helpers
-description: "Helpers for testing accessibility (a11y) in Flutter widget tests."
+name: a11y_test
+description: Accessibility testing helpers for Flutter widget and integration tests.
 version: 0.0.1
-homepage: https://github.com/defuncart/flutter_a11y_widget_testing_helpers
+homepage: https://github.com/defuncart/a11y_test
+repository: https://github.com/defuncart/a11y_test
+issue_tracker: https://github.com/defuncart/a11y_test/issues
+topics:
+  - accessibility
+  - a11y
+  - testing
+  - flutter-test
 
 environment:
   sdk: ^3.11.0

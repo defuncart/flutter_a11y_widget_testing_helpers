@@ -17,7 +17,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_a11y_widget_testing_helpers:
+  a11y_test:
     path: ../
   flutter_lints:
 

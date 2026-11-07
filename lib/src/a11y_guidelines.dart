@@ -11,6 +11,9 @@ typedef LabelsBuilder = List<Pattern> Function(BuildContext context);
 extension AccessibilityTester on WidgetTester {
   /// Pumps [widget] at [screen] and checks it against all built-in guidelines.
   ///
+  /// [pumpApp] optionally overrides [A11yTestConfig.pumpApp] for this call,
+  /// useful when a screen needs its own dependencies.
+  ///
   /// [expectedLabels] is an optional callback to test if semantic labels are present.
   ///
   /// ```dart
@@ -25,6 +28,7 @@ extension AccessibilityTester on WidgetTester {
   /// ```
   Future<void> expectMeetsAccessibilityGuidelines(
     Widget widget, {
+    PumpApp? pumpApp,
     ScreenSize screen = ScreenSize.mobile,
     LabelsBuilder? expectedLabels,
   }) async {
@@ -32,7 +36,7 @@ extension AccessibilityTester on WidgetTester {
 
     try {
       setViewSize(screen.size);
-      await A11yTestConfig.pumpApp(this, widget);
+      await (pumpApp ?? A11yTestConfig.pumpApp)(this, widget);
 
       // on web test 24px, mobile/tablet iOS 44px, Android 48px
       if ([ScreenSize.mobile, ScreenSize.tablet].contains(screen)) {
@@ -63,6 +67,9 @@ extension AccessibilityTester on WidgetTester {
 /// Registers one accessibility test per screen size.
 /// [builder] is called per test so each gets a fresh widget instance.
 ///
+/// [pumpApp] optionally overrides [A11yTestConfig.pumpApp] for these tests,
+/// useful when a screen needs its own dependencies.
+///
 /// [screens] defaults to [A11yTestConfig.screens].
 ///
 /// [expectedLabels] is an optional callback to test if semantic labels are present.
@@ -80,6 +87,7 @@ extension AccessibilityTester on WidgetTester {
 void testAccessibility(
   String description,
   Widget Function() builder, {
+  PumpApp? pumpApp,
   List<ScreenSize>? screens,
   LabelsBuilder? expectedLabels,
 }) {
@@ -87,37 +95,12 @@ void testAccessibility(
     testWidgets('$description meets accessibility guidelines on ${screen.name}', (tester) async {
       await tester.expectMeetsAccessibilityGuidelines(
         builder(),
+        pumpApp: pumpApp,
         screen: screen,
         expectedLabels: expectedLabels,
       );
     });
   }
-}
-
-/// Convenience like [testWidgets], with the semantics tree enabled for the whole test.
-void testSemantics(String description, Future<void> Function(WidgetTester tester) body) {
-  testWidgets(description, (WidgetTester tester) async {
-    final SemanticsHandle handle = tester.ensureSemantics();
-    try {
-      await body(tester);
-    } finally {
-      handle.dispose();
-    }
-  });
-}
-
-extension SemanticsExpectations on WidgetTester {
-  /// Expects exactly [count] semantics nodes whose label matches [label].
-  void expectSemanticsLabel(Pattern label, {int count = 1}) {
-    expect(
-      find.bySemanticsLabel(label),
-      count == 0 ? findsNothing : findsNWidgets(count),
-      reason: 'Expected $count semantics node(s) labelled "$label"',
-    );
-  }
-
-  /// The semantics node whose label matches [label].
-  SemanticsNode semanticsNode(Pattern label) => getSemantics(find.bySemanticsLabel(label));
 }
 
 const AccessibilityGuideline _wcagTapTargetGuideline = MinimumTapTargetGuideline(
